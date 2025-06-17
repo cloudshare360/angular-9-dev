@@ -1,0 +1,54 @@
+// .devcontainer/devcontainer.json
+{
+    "name": "Angular 9 Development Environment",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:0-12", // Explicitly use Node.js 12 for better Angular 9 compatibility
+
+    "features": {
+        // Option 1: Use the dedicated Angular CLI feature (preferred)
+        "ghcr.io/devcontainers-extra/features/angular-cli:2": {
+            "version": "9.1.9" // Specify the exact Angular CLI version for Angular 9
+        }
+        // Option 2 (Less preferred if Angular CLI feature is available):
+        // "ghcr.io/devcontainers/features/node:1": {
+        //     "version": "12" // Node.js version compatible with Angular 9
+        // }
+    },
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "angular.ng-template", // Angular Language Service
+                "esbenp.prettier-vscode", // Code formatter
+                "dbaeumer.vscode-eslint", // ESLint for linting
+                "formulahendry.auto-rename-tag", // Auto rename paired HTML tags
+                "CoenraadS.bracket-pair-colorizer-2", // Colorize matching brackets
+                "ms-vscode.vscode-typescript-tslint-plugin" // TypeScript TSLint integration (if using TSLint)
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "editor.formatOnSave": true,
+                "[typescript]": {
+                    "editor.defaultFormatter": "esbenp.prettier-vscode"
+                },
+                "[html]": {
+                    "editor.defaultFormatter": "esbenp.prettier-vscode"
+                },
+                "[json]": {
+                    "editor.defaultFormatter": "esbenp.prettier-vscode"
+                }
+            }
+        }
+    },
+
+    // No need for "postCreateCommand": "npm install -g @angular/cli@9" anymore,
+    // as it's handled by the feature!
+    "postCreateCommand": "npm install", // Only need to install project dependencies
+
+    "forwardPorts": [4200],
+
+    "postAttachCommand": {
+        "server": "npm start"
+    },
+
+    "remoteUser": "node"
+}
